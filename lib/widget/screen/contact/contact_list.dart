@@ -1,4 +1,5 @@
 import 'package:debting/model/contact.dart';
+import 'package:debting/screen/contact/contact_info_screen.dart';
 import 'package:debting/util/text.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -41,14 +42,22 @@ class _ContactListState extends State<ContactList> {
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(8),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContactInfoScreen(
+                            uuid: contactKey as String,
+                          ),
+                        ),
+                      );
+                    },
                     child: ListTile(
                       contentPadding: EdgeInsets.symmetric(
                         vertical: 5,
                         horizontal: 10,
                       ),
                       leading: CircleAvatar(
-                        backgroundColor: Colors.grey.shade400,
                         child: Text(
                           getInitials(contact.name),
                         ),

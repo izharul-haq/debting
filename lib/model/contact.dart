@@ -19,4 +19,18 @@ class Contact {
     required this.lend,
     required this.borrow,
   });
+
+  int sumDebt() {
+    int total = 0;
+
+    for (var e in lend) {
+      total += e.amount;
+    }
+
+    for (var e in borrow) {
+      total -= e.amount;
+    }
+
+    return total;
+  }
 }
