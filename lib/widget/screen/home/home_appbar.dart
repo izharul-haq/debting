@@ -1,3 +1,4 @@
+import 'package:debting/screen/contact/contact_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -12,7 +13,14 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
       title: Text('Home'),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContactListScreen(),
+              ),
+            );
+          },
           icon: Icon(Icons.person),
         ),
         IconButton(
