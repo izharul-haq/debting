@@ -1,0 +1,5 @@
+{
+  "dart.hotReloadOnSave": "always",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+}
