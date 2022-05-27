@@ -87,7 +87,7 @@ class _ContactFormState extends State<ContactForm> {
                 foregroundColor: MaterialStateProperty.all(Colors.white),
                 overlayColor: MaterialStateProperty.all(Colors.blue.shade600),
               ),
-            )
+            ),
           ],
         ),
       ),

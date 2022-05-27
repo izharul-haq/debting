@@ -1,3 +1,4 @@
+import 'package:debting/screen/debt/add_debt_screen.dart';
 import 'package:debting/widget/screen/contact/contact_info.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,16 @@ class _ContactInfoScreenState extends State<ContactInfoScreen> {
         uuid: widget.uuid,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddDebtScreen(
+                uuid: widget.uuid,
+              ),
+            ),
+          );
+        },
         child: Icon(
           Icons.edit,
         ),

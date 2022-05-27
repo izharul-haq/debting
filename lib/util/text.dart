@@ -4,7 +4,7 @@ String getInitials(String name) =>
     name.trim().split(RegExp(' +')).map((n) => n[0]).take(2).join();
 
 String currencyFormatter(int money) {
-  final currencyFormatter = NumberFormat.currency(locale: 'ID');
+  final currencyFormatter = NumberFormat.currency(locale: 'ID', symbol: 'Rp');
 
   return currencyFormatter.format(money);
 }
