@@ -23,10 +23,10 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
           },
           icon: Icon(Icons.person),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.settings),
-        ),
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: Icon(Icons.settings),
+        // ),
       ],
     );
   }

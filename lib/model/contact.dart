@@ -20,15 +20,19 @@ class Contact {
     required this.borrow,
   });
 
-  int sumDebt() {
+  int sumDebt({bool countLend = false, bool countBorrow = false}) {
     int total = 0;
 
-    for (var e in lend) {
-      total += e.amount;
+    if (countLend) {
+      for (var e in lend) {
+        total += e.amount;
+      }
     }
 
-    for (var e in borrow) {
-      total -= e.amount;
+    if (countBorrow) {
+      for (var e in borrow) {
+        total -= e.amount;
+      }
     }
 
     return total;

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class SumDebt extends StatelessWidget {
   final int total;
-  final String name;
-  const SumDebt({Key? key, required this.name, required this.total})
+  final String? name;
+  final String? title;
+  const SumDebt({Key? key, this.name, required this.total, this.title})
       : super(key: key);
 
   @override
@@ -14,11 +15,13 @@ class SumDebt extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(iOwe ? 'You owe $name' : '$name owe you'),
+            Text(title == null
+                ? (iOwe ? 'You owe $name' : '$name owes you')
+                : title as String),
             SizedBox(height: 10),
             Text(
               currencyFormatter(total.abs()),

@@ -52,7 +52,11 @@ class _ContactInfoState extends State<ContactInfo> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       InfoCard(name: contact.name),
-                      SumDebt(name: contact.name, total: contact.sumDebt()),
+                      SumDebt(
+                        name: contact.name,
+                        total:
+                            contact.sumDebt(countLend: true, countBorrow: true),
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Center(child: Text('Details')),
