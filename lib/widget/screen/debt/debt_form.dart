@@ -33,6 +33,7 @@ class _DebtFormState extends State<DebtForm> {
     super.initState();
     debtBox = Hive.box('debts');
     uuid = widget.uuid;
+    _date.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
   }
 
   @override
@@ -40,10 +41,7 @@ class _DebtFormState extends State<DebtForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 10,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -66,12 +64,16 @@ class _DebtFormState extends State<DebtForm> {
                       amount: int.parse(_amount.text),
                       desc: _desc.text,
                     ));
+
+                    contact.lend.sort((a, b) => a.date.compareTo(b.date));
                   } else if (_type == 'borrow') {
                     contact.borrow.add(Debt(
                       date: DateTime.parse(_date.text),
                       amount: int.parse(_amount.text),
                       desc: _desc.text,
                     ));
+
+                    contact.borrow.sort((a, b) => a.date.compareTo(b.date));
                   }
 
                   debtBox.put(
@@ -112,10 +114,7 @@ class _DebtFormState extends State<DebtForm> {
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         isDense: true,
-        icon: Icon(
-          Icons.monetization_on_rounded,
-          size: 20,
-        ),
+        icon: Icon(Icons.monetization_on_rounded, size: 20),
         label: Text('Amount'),
         prefix: Text('Rp'),
       ),
@@ -131,10 +130,7 @@ class _DebtFormState extends State<DebtForm> {
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         isDense: true,
-        icon: Icon(
-          Icons.description_rounded,
-          size: 20,
-        ),
+        icon: Icon(Icons.description_rounded, size: 20),
         label: Text('Description'),
       ),
     );
@@ -155,7 +151,7 @@ class _DebtFormState extends State<DebtForm> {
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         isDense: true,
-        icon: Icon(Icons.savings_rounded),
+        icon: Icon(Icons.savings_rounded, size: 20),
         label: Text('Type'),
       ),
       value: _type,
@@ -172,10 +168,7 @@ class _DebtFormState extends State<DebtForm> {
       controller: controller,
       decoration: InputDecoration(
         isDense: true,
-        icon: Icon(
-          Icons.calendar_today_rounded,
-          size: 20,
-        ),
+        icon: Icon(Icons.calendar_today_rounded, size: 20),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         label: Text('Date'),
       ),

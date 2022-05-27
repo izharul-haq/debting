@@ -1,6 +1,7 @@
 import 'package:debting/model/contact.dart';
 import 'package:debting/screen/contact/contact_info_screen.dart';
 import 'package:debting/util/text.dart';
+import 'package:debting/widget/common/empty_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -25,7 +26,7 @@ class _ContactListState extends State<ContactList> {
     return ValueListenableBuilder(
       valueListenable: debtBox.listenable(),
       builder: (context, Box box, widget) => box.isEmpty
-          ? _emptyContact()
+          ? EmptyList(message: 'Oops, You haven\'t add any contact')
           : ListView.builder(
               padding: EdgeInsets.symmetric(
                 horizontal: 5,
@@ -74,12 +75,6 @@ class _ContactListState extends State<ContactList> {
                 );
               },
             ),
-    );
-  }
-
-  Widget _emptyContact() {
-    return Center(
-      child: Text('Oops, You haven\'t add any contact'),
     );
   }
 }

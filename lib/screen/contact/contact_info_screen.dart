@@ -18,24 +18,17 @@ class _ContactInfoScreenState extends State<ContactInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: ContactInfo(
-        uuid: widget.uuid,
-      ),
+      appBar: AppBar(title: Text('Profile')),
+      body: ContactInfo(uuid: widget.uuid),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddDebtScreen(
-                uuid: widget.uuid,
-              ),
-            ),
+                builder: (context) => AddDebtScreen(uuid: widget.uuid)),
           );
         },
-        child: Icon(
-          Icons.edit,
-        ),
+        child: Icon(Icons.edit),
       ),
     );
   }

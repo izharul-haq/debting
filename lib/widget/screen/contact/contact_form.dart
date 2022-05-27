@@ -27,29 +27,19 @@ class _ContactFormState extends State<ContactForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 5,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
               textCapitalization: TextCapitalization.words,
               controller: _name,
               decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(),
+                icon: Icon(Icons.person_rounded, size: 20),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 isDense: true,
-                contentPadding: EdgeInsets.zero,
-                hintText: 'Name',
-                suffix: IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    _name.clear();
-                  },
-                  iconSize: 16,
-                  icon: Icon(Icons.clear),
-                ),
+                label: Text('Name'),
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {

@@ -12,7 +12,7 @@ class AddDebtScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('Add Debt')),
       body: DebtForm(
         uuid: uuid,
       ),

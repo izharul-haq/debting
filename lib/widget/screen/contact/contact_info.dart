@@ -1,8 +1,9 @@
-import 'dart:math';
-
 import 'package:debting/model/contact.dart';
 import 'package:debting/model/debt.dart';
+import 'package:debting/screen/debt/debt_list_screen.dart';
 import 'package:debting/util/text.dart';
+import 'package:debting/widget/common/sum_debt.dart';
+import 'package:debting/widget/screen/contact/info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -33,194 +34,106 @@ class _ContactInfoState extends State<ContactInfo> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: debtBox.listenable(),
-        builder: (context, Box box, widget) {
-          var contact = box.get(uuid) as Contact;
-          var total = contact.sumDebt();
+      valueListenable: debtBox.listenable(),
+      builder: (context, Box box, widget) {
+        var contact = box.get(uuid) as Contact;
 
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _cardInfo(contact.name),
-                SizedBox(height: 10),
-                _totalDebt(total, contact.name),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Center(
-                    child: Text(
-                      'Details',
-                      style: TextStyle(fontSize: 13),
-                    ),
+        return LayoutBuilder(
+          builder: (context, BoxConstraints viewportConstraint) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints:
+                    BoxConstraints(maxHeight: viewportConstraint.maxHeight),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      InfoCard(name: contact.name),
+                      SumDebt(name: contact.name, total: contact.sumDebt()),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Center(child: Text('Details')),
+                      ),
+                      _latestDebt(
+                        type: 'Lend',
+                        debt: contact.lend.isEmpty ? null : contact.lend.last,
+                        name: contact.name,
+                      ),
+                      _latestDebt(
+                        type: 'Borrow',
+                        debt:
+                            contact.borrow.isEmpty ? null : contact.borrow.last,
+                        name: contact.name,
+                      ),
+                    ],
                   ),
                 ),
-                _debtHistory(contact.lend, 'Lend'),
-                SizedBox(height: 10),
-                _debtHistory(contact.borrow, 'Borrow'),
-              ],
-            ),
-          );
-        });
-  }
-
-  Widget _cardInfo(String name) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-      ),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 10,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: Colors.grey.shade300,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 50,
-              child: Text(
-                getInitials(name),
-                style: TextStyle(
-                  fontSize: 30,
-                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Text(
-                name,
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+            );
+          },
+        );
+      },
     );
   }
 
-  Widget _totalDebt(int total, String name) {
-    final iOwe = total < 0;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-      ),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 10,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: Colors.grey.shade300,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(iOwe ? 'You owe $name' : '$name owe you'),
-            Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Text(
-                currencyFormatter(total),
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w500,
-                  color: iOwe ? Colors.red : Colors.green.shade800,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _debtHistory(List<Debt> debts, String type) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-      ),
-      child: Container(
-        constraints: BoxConstraints(maxHeight: 125),
-        padding: EdgeInsets.symmetric(
-          vertical: 10,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: Colors.grey.shade300,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
+  Widget _latestDebt({Debt? debt, required String type, required String name}) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Center(child: Text('${type}ing History')),
-            SizedBox(height: 10),
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: _debtList(debts, type),
-            )),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _debtList(List<Debt> debts, String type) {
-    return debts.isEmpty
-        ? Center(
-            child: Text(
-              'There\'s no history',
-              style: TextStyle(color: Colors.grey.shade600),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${type}ing History',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DebtListScreen(uuid: uuid, type: type, name: name),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.more_horiz_rounded),
+                ),
+              ],
             ),
-          )
-        : ListView.builder(
-            itemCount: min(debts.length, 5),
-            itemBuilder: (context, index) {
-              var debt = debts[index];
-
-              return Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    child: Text(
-                      DateFormat('dd\nMM').format(debt.date),
-                      style: TextStyle(fontSize: 13),
+            Divider(thickness: 1),
+            debt == null
+                ? Center(child: Text('There\'re no history'))
+                : ListTile(
+                    leading: CircleAvatar(
+                      child: Text(
+                        DateFormat('dd\nMM').format(debt.date),
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
-                  ),
-                  title: Text(currencyFormatter(debt.amount)),
-                  subtitle: Text(
-                    debt.desc,
-                    maxLines: 1,
-                    style: TextStyle(
-                      overflow: TextOverflow.ellipsis,
+                    title: Text(
+                      currencyFormatter(debt.amount),
+                      style: TextStyle(
+                        color:
+                            type == 'Lend' ? Colors.green.shade700 : Colors.red,
+                      ),
                     ),
-                  ),
-                  trailing: IconButton(
+                    subtitle: Text(debt.desc),
+                    trailing: IconButton(
                       onPressed: () {
                         var contact = debtBox.get(uuid) as Contact;
 
-                        if (type == 'Lend') {
-                          contact.lend.removeAt(index);
-                        } else {
-                          contact.borrow.removeAt(index);
-                        }
+                        type == 'Lend'
+                            ? contact.lend.removeLast()
+                            : contact.borrow.removeLast();
+
                         debtBox.put(
                           uuid,
                           Contact(
@@ -230,10 +143,12 @@ class _ContactInfoState extends State<ContactInfo> {
                           ),
                         );
                       },
-                      icon: Icon(Icons.delete_rounded)),
-                ),
-              );
-            },
-          );
+                      icon: Icon(Icons.delete_rounded),
+                    ),
+                  ),
+          ],
+        ),
+      ),
+    );
   }
 }

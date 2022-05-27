@@ -20,22 +20,19 @@ class DebtAdapter extends TypeAdapter<Debt> {
       date: fields[0] as DateTime,
       amount: fields[1] as int,
       desc: fields[2] as String,
-      paid: fields[3] == null ? false : fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Debt obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.date)
       ..writeByte(1)
       ..write(obj.amount)
       ..writeByte(2)
-      ..write(obj.desc)
-      ..writeByte(3)
-      ..write(obj.paid);
+      ..write(obj.desc);
   }
 
   @override

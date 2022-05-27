@@ -13,7 +13,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('Contact List')),
       body: ContactList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
