@@ -1,4 +1,5 @@
 import 'package:debting/model/contact.dart';
+import 'package:debting/model/debt_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -21,7 +22,7 @@ void deleteDebt(
   BuildContext context, {
   required Box box,
   required String uuid,
-  required String type,
+  required DebtType type,
 }) {
   showDialog(
     context: context,
@@ -38,7 +39,7 @@ void deleteDebt(
             onPressed: () {
               var contact = box.get(uuid) as Contact;
 
-              type == 'Lend'
+              type == DebtType.lend
                   ? contact.lend.removeLast()
                   : contact.borrow.removeLast();
 

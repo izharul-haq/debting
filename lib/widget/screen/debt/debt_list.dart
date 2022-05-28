@@ -1,5 +1,7 @@
 import 'package:debting/model/contact.dart';
 import 'package:debting/model/debt.dart';
+import 'package:debting/model/debt_type.dart';
+import 'package:debting/screen/debt/edit_debt_screen.dart';
 import 'package:debting/util/debt.dart';
 import 'package:debting/util/text.dart';
 import 'package:debting/widget/common/empty_list.dart';
@@ -9,7 +11,7 @@ import 'package:intl/intl.dart';
 
 class DebtList extends StatefulWidget {
   final String uuid;
-  final String type;
+  final DebtType type;
   const DebtList({Key? key, required this.uuid, required this.type})
       : super(key: key);
 
@@ -21,7 +23,7 @@ class _DebtListState extends State<DebtList> {
   late final Box debtBox;
   late final Contact contact;
   late final String uuid;
-  late final String type;
+  late final DebtType type;
 
   @override
   void initState() {
@@ -38,7 +40,7 @@ class _DebtListState extends State<DebtList> {
     return ValueListenableBuilder(
       valueListenable: debtBox.listenable(),
       builder: (context, Box box, widget) =>
-          _debtList(type == 'Lend' ? contact.lend : contact.borrow),
+          _debtList(type == DebtType.lend ? contact.lend : contact.borrow),
     );
   }
 
@@ -55,29 +57,44 @@ class _DebtListState extends State<DebtList> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    child: Text(
-                      DateFormat('dd\nMM').format(debt.date),
-                      style: TextStyle(fontSize: 13),
-                    ),
-                  ),
-                  title: Text(
-                    currencyFormatter(debt.amount),
-                    style: TextStyle(
-                      color:
-                          type == 'Lend' ? Colors.green.shade700 : Colors.red,
-                    ),
-                  ),
-                  subtitle: Text(debt.desc),
-                  trailing: IconButton(
-                    onPressed: () => deleteDebt(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
                       context,
-                      box: debtBox,
-                      uuid: uuid,
-                      type: type,
+                      MaterialPageRoute(
+                        builder: (context) => EditDebtScreen(
+                          uuid: uuid,
+                          debt: debt,
+                          type: type,
+                        ),
+                      ),
+                    );
+                  },
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Text(
+                        DateFormat('dd\nMM').format(debt.date),
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
-                    icon: Icon(Icons.delete_rounded),
+                    title: Text(
+                      currencyFormatter(debt.amount),
+                      style: TextStyle(
+                        color: type == DebtType.lend
+                            ? Colors.green.shade700
+                            : Colors.red,
+                      ),
+                    ),
+                    subtitle: Text(debt.desc),
+                    trailing: IconButton(
+                      onPressed: () => deleteDebt(
+                        context,
+                        box: debtBox,
+                        uuid: uuid,
+                        type: type,
+                      ),
+                      icon: Icon(Icons.delete_rounded),
+                    ),
                   ),
                 ),
               );

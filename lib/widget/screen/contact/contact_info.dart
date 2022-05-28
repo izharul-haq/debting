@@ -1,6 +1,8 @@
 import 'package:debting/model/contact.dart';
 import 'package:debting/model/debt.dart';
+import 'package:debting/model/debt_type.dart';
 import 'package:debting/screen/debt/debt_list_screen.dart';
+import 'package:debting/screen/debt/edit_debt_screen.dart';
 import 'package:debting/util/debt.dart';
 import 'package:debting/util/text.dart';
 import 'package:debting/widget/common/sum_debt.dart';
@@ -63,14 +65,13 @@ class _ContactInfoState extends State<ContactInfo> {
                         child: Center(child: Text('Details')),
                       ),
                       _latestDebt(
-                        type: 'Lend',
-                        debt: contact.lend.isEmpty ? null : contact.lend.last,
+                        contact.lend.isEmpty ? null : contact.lend.last,
+                        type: DebtType.lend,
                         name: contact.name,
                       ),
                       _latestDebt(
-                        type: 'Borrow',
-                        debt:
-                            contact.borrow.isEmpty ? null : contact.borrow.last,
+                        contact.borrow.isEmpty ? null : contact.borrow.last,
+                        type: DebtType.borrow,
                         name: contact.name,
                       ),
                     ],
@@ -84,7 +85,8 @@ class _ContactInfoState extends State<ContactInfo> {
     );
   }
 
-  Widget _latestDebt({Debt? debt, required String type, required String name}) {
+  Widget _latestDebt(Debt? debt,
+      {required DebtType type, required String name}) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
@@ -96,7 +98,7 @@ class _ContactInfoState extends State<ContactInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${type}ing History',
+                  '${type.name}ing history',
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
                 IconButton(
@@ -116,29 +118,44 @@ class _ContactInfoState extends State<ContactInfo> {
             Divider(thickness: 1),
             debt == null
                 ? Center(child: Text('There\'re no history'))
-                : ListTile(
-                    leading: CircleAvatar(
-                      child: Text(
-                        DateFormat('dd\nMM').format(debt.date),
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                    title: Text(
-                      currencyFormatter(debt.amount),
-                      style: TextStyle(
-                        color:
-                            type == 'Lend' ? Colors.green.shade700 : Colors.red,
-                      ),
-                    ),
-                    subtitle: Text(debt.desc),
-                    trailing: IconButton(
-                      onPressed: () => deleteDebt(
+                : InkWell(
+                    onTap: () {
+                      Navigator.push(
                         context,
-                        box: debtBox,
-                        uuid: uuid,
-                        type: type,
+                        MaterialPageRoute(
+                          builder: (context) => EditDebtScreen(
+                            uuid: uuid,
+                            type: type,
+                            debt: debt,
+                          ),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          DateFormat('dd\nMM').format(debt.date),
+                          style: TextStyle(fontSize: 13),
+                        ),
                       ),
-                      icon: Icon(Icons.delete_rounded),
+                      title: Text(
+                        currencyFormatter(debt.amount),
+                        style: TextStyle(
+                          color: type == DebtType.lend
+                              ? Colors.green.shade700
+                              : Colors.red,
+                        ),
+                      ),
+                      subtitle: Text(debt.desc),
+                      trailing: IconButton(
+                        onPressed: () => deleteDebt(
+                          context,
+                          box: debtBox,
+                          uuid: uuid,
+                          type: type,
+                        ),
+                        icon: Icon(Icons.delete_rounded),
+                      ),
                     ),
                   ),
           ],

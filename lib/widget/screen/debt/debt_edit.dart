@@ -8,31 +8,45 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
-class DebtForm extends StatefulWidget {
+class DebtEdit extends StatefulWidget {
   final String uuid;
-  const DebtForm({Key? key, required this.uuid}) : super(key: key);
+  final Debt debt;
+  final DebtType type;
+  const DebtEdit({
+    Key? key,
+    required this.uuid,
+    required this.debt,
+    required this.type,
+  }) : super(key: key);
 
   @override
-  State<DebtForm> createState() => _DebtFormState();
+  State<DebtEdit> createState() => _DebtEditState();
 }
 
-class _DebtFormState extends State<DebtForm> {
+class _DebtEditState extends State<DebtEdit> {
   final _formKey = GlobalKey<FormState>();
+
   final _amount = TextEditingController();
   final _desc = TextEditingController();
   final _date = TextEditingController();
 
   late Box debtBox;
+  late Debt debt;
   late String uuid;
-
-  DebtType? _type;
+  late DebtType type;
 
   @override
   void initState() {
     super.initState();
+
     debtBox = Hive.box('debts');
+    debt = widget.debt.deepCopy();
     uuid = widget.uuid;
-    _date.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    type = widget.type;
+
+    _amount.text = widget.debt.amount.toString();
+    _desc.text = widget.debt.desc;
+    _date.text = DateFormat('yyyy-MM-dd').format(widget.debt.date);
   }
 
   @override
@@ -40,12 +54,10 @@ class _DebtFormState extends State<DebtForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _typeForm(),
-            SizedBox(height: 10),
             AmountInput(controller: _amount),
             SizedBox(height: 10),
             DescInput(controller: _desc),
@@ -57,21 +69,21 @@ class _DebtFormState extends State<DebtForm> {
                 if (_formKey.currentState!.validate()) {
                   var contact = debtBox.get(uuid) as Contact;
 
-                  if (_type == DebtType.lend) {
+                  if (type == DebtType.lend) {
+                    contact.lend.removeWhere((d) => debt.equals(d));
                     contact.lend.add(Debt(
                       date: DateTime.parse(_date.text),
                       amount: int.parse(_amount.text),
                       desc: _desc.text,
                     ));
-
                     contact.lend.sort((a, b) => a.date.compareTo(b.date));
-                  } else if (_type == DebtType.borrow) {
+                  } else {
+                    contact.borrow.removeWhere((d) => debt.equals(d));
                     contact.borrow.add(Debt(
                       date: DateTime.parse(_date.text),
                       amount: int.parse(_amount.text),
                       desc: _desc.text,
                     ));
-
                     contact.borrow.sort((a, b) => a.date.compareTo(b.date));
                   }
 
@@ -87,7 +99,7 @@ class _DebtFormState extends State<DebtForm> {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Add Debt', style: TextStyle(fontSize: 16)),
+              child: Text('Edit Debt', style: TextStyle(fontSize: 16)),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -97,26 +109,6 @@ class _DebtFormState extends State<DebtForm> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _typeForm() {
-    return DropdownButtonFormField<DebtType>(
-      items: [
-        DropdownMenuItem(child: Text('Lending'), value: DebtType.lend),
-        DropdownMenuItem(child: Text('Borrowing'), value: DebtType.borrow),
-      ],
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        isDense: true,
-        icon: Icon(Icons.savings_rounded, size: 20),
-        label: Text('Type'),
-      ),
-      value: _type,
-      onChanged: (DebtType? value) {
-        setState(() => _type = value);
-      },
-      validator: (value) => (value == null) ? 'Please select debt type' : null,
     );
   }
 

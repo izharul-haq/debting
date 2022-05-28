@@ -18,4 +18,12 @@ class Debt {
     required this.amount,
     required this.desc,
   });
+
+  Debt deepCopy() {
+    return Debt(amount: amount, date: date, desc: desc);
+  }
+
+  bool equals(Debt other) {
+    return other.amount == amount && other.date == date && other.desc == desc;
+  }
 }
