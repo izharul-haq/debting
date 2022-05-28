@@ -1,4 +1,5 @@
 import 'package:debting/model/contact.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 int getTotalDebt(Box box, {bool lend = false, bool borrow = false}) {
@@ -14,4 +15,48 @@ int getTotalDebt(Box box, {bool lend = false, bool borrow = false}) {
   }
 
   return total;
+}
+
+void deleteDebt(
+  BuildContext context, {
+  required Box box,
+  required String uuid,
+  required String type,
+}) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Delete Debt'),
+        content: Text('Are you sure to remove this debt?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              var contact = box.get(uuid) as Contact;
+
+              type == 'Lend'
+                  ? contact.lend.removeLast()
+                  : contact.borrow.removeLast();
+
+              box.put(
+                uuid,
+                Contact(
+                  name: contact.name,
+                  lend: contact.lend,
+                  borrow: contact.borrow,
+                ),
+              );
+
+              Navigator.of(context).pop();
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -64,9 +64,7 @@ class _ContactListState extends State<ContactList> {
                         ),
                       ),
                       trailing: IconButton(
-                        onPressed: () {
-                          box.delete(contactKey);
-                        },
+                        onPressed: () => _deleteDialog(context, contactKey),
                         icon: Icon(Icons.delete),
                       ),
                       title: Text(contact.name),
@@ -75,6 +73,31 @@ class _ContactListState extends State<ContactList> {
                 );
               },
             ),
+    );
+  }
+
+  void _deleteDialog(BuildContext context, String contactKey) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete Contact'),
+          content: Text('Are you sure to remove this contact?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                debtBox.delete(contactKey);
+                Navigator.of(context).pop();
+              },
+              child: Text('Yes'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

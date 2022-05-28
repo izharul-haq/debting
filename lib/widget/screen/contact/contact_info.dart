@@ -1,6 +1,7 @@
 import 'package:debting/model/contact.dart';
 import 'package:debting/model/debt.dart';
 import 'package:debting/screen/debt/debt_list_screen.dart';
+import 'package:debting/util/debt.dart';
 import 'package:debting/util/text.dart';
 import 'package:debting/widget/common/sum_debt.dart';
 import 'package:debting/widget/screen/contact/info_card.dart';
@@ -131,22 +132,12 @@ class _ContactInfoState extends State<ContactInfo> {
                     ),
                     subtitle: Text(debt.desc),
                     trailing: IconButton(
-                      onPressed: () {
-                        var contact = debtBox.get(uuid) as Contact;
-
-                        type == 'Lend'
-                            ? contact.lend.removeLast()
-                            : contact.borrow.removeLast();
-
-                        debtBox.put(
-                          uuid,
-                          Contact(
-                            name: contact.name,
-                            lend: contact.lend,
-                            borrow: contact.borrow,
-                          ),
-                        );
-                      },
+                      onPressed: () => deleteDebt(
+                        context,
+                        box: debtBox,
+                        uuid: uuid,
+                        type: type,
+                      ),
                       icon: Icon(Icons.delete_rounded),
                     ),
                   ),

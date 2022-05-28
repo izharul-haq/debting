@@ -1,5 +1,6 @@
 import 'package:debting/model/contact.dart';
 import 'package:debting/model/debt.dart';
+import 'package:debting/util/debt.dart';
 import 'package:debting/util/text.dart';
 import 'package:debting/widget/common/empty_list.dart';
 import 'package:flutter/material.dart';
@@ -70,22 +71,12 @@ class _DebtListState extends State<DebtList> {
                   ),
                   subtitle: Text(debt.desc),
                   trailing: IconButton(
-                    onPressed: () {
-                      var contact = debtBox.get(uuid) as Contact;
-
-                      type == 'Lend'
-                          ? contact.lend.removeLast()
-                          : contact.borrow.removeLast();
-
-                      debtBox.put(
-                        uuid,
-                        Contact(
-                          name: contact.name,
-                          lend: contact.lend,
-                          borrow: contact.borrow,
-                        ),
-                      );
-                    },
+                    onPressed: () => deleteDebt(
+                      context,
+                      box: debtBox,
+                      uuid: uuid,
+                      type: type,
+                    ),
                     icon: Icon(Icons.delete_rounded),
                   ),
                 ),
