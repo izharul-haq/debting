@@ -48,7 +48,7 @@ class _DebtListState extends State<DebtList> {
     return debts.isEmpty
         ? EmptyList(message: 'Yay, you don\'t have any debt')
         : ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             itemCount: debts.length,
             itemBuilder: (context, index) {
               var debt = debts[index];

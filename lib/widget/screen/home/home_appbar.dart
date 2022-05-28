@@ -16,17 +16,11 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => ContactListScreen(),
-              ),
+              MaterialPageRoute(builder: (context) => ContactListScreen()),
             );
           },
-          icon: Icon(Icons.person),
+          icon: Icon(Icons.person_rounded),
         ),
-        // IconButton(
-        //   onPressed: () {},
-        //   icon: Icon(Icons.settings),
-        // ),
       ],
     );
   }

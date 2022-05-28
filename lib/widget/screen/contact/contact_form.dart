@@ -36,8 +36,9 @@ class _ContactFormState extends State<ContactForm> {
               controller: _name,
               decoration: InputDecoration(
                 icon: Icon(Icons.person_rounded, size: 20),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 isDense: true,
                 label: Text('Name'),
               ),
@@ -49,29 +50,18 @@ class _ContactFormState extends State<ContactForm> {
                 return null;
               },
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             TextButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   debtBox.put(
                     Uuid().v4(),
-                    Contact(
-                      name: _name.text,
-                      lend: [],
-                      borrow: [],
-                    ),
+                    Contact(name: _name.text, lend: [], borrow: []),
                   );
                   Navigator.pop(context);
                 }
               },
-              child: Text(
-                'Save',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
+              child: Text('Save', style: TextStyle(fontSize: 16)),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
                 foregroundColor: MaterialStateProperty.all(Colors.white),

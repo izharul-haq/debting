@@ -3,19 +3,13 @@ import 'package:flutter/material.dart';
 
 class AddDebtScreen extends StatelessWidget {
   final String uuid;
-
-  const AddDebtScreen({
-    Key? key,
-    required this.uuid,
-  }) : super(key: key);
+  const AddDebtScreen({Key? key, required this.uuid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Add Debt')),
-      body: DebtForm(
-        uuid: uuid,
-      ),
+      body: DebtForm(uuid: uuid),
     );
   }
 }

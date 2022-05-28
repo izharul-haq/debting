@@ -5,8 +5,12 @@ class SumDebt extends StatelessWidget {
   final int total;
   final String? name;
   final String? title;
-  const SumDebt({Key? key, this.name, required this.total, this.title})
-      : super(key: key);
+  const SumDebt({
+    Key? key,
+    this.name,
+    required this.total,
+    this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class SumDebt extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 color: iOwe ? Colors.red : Colors.green.shade700,
               ),
-            )
+            ),
           ],
         ),
       ),

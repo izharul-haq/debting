@@ -14,9 +14,7 @@ class ContactListScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => AddContactScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => AddContactScreen()),
           );
         },
         child: Icon(Icons.person_add_alt_1_rounded),

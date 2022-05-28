@@ -14,10 +14,7 @@ import 'package:intl/intl.dart';
 class ContactInfo extends StatefulWidget {
   final String uuid;
 
-  const ContactInfo({
-    Key? key,
-    required this.uuid,
-  }) : super(key: key);
+  const ContactInfo({Key? key, required this.uuid}) : super(key: key);
 
   @override
   State<ContactInfo> createState() => _ContactInfoState();
@@ -45,8 +42,9 @@ class _ContactInfoState extends State<ContactInfo> {
           builder: (context, BoxConstraints viewportConstraint) {
             return SingleChildScrollView(
               child: ConstrainedBox(
-                constraints:
-                    BoxConstraints(maxHeight: viewportConstraint.maxHeight),
+                constraints: BoxConstraints(
+                  maxHeight: viewportConstraint.maxHeight,
+                ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Column(
@@ -57,8 +55,10 @@ class _ContactInfoState extends State<ContactInfo> {
                       InfoCard(name: contact.name),
                       SumDebt(
                         name: contact.name,
-                        total:
-                            contact.sumDebt(countLend: true, countBorrow: true),
+                        total: contact.sumDebt(
+                          countLend: true,
+                          countBorrow: true,
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
@@ -106,8 +106,10 @@ class _ContactInfoState extends State<ContactInfo> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DebtListScreen(uuid: uuid, type: type),
+                        builder: (context) => DebtListScreen(
+                          uuid: uuid,
+                          type: type,
+                        ),
                       ),
                     );
                   },

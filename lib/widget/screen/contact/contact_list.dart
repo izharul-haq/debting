@@ -28,10 +28,7 @@ class _ContactListState extends State<ContactList> {
       builder: (context, Box box, widget) => box.isEmpty
           ? EmptyList(message: 'Oops, You haven\'t add any contact')
           : ListView.builder(
-              padding: EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 5,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               itemCount: box.length,
               itemBuilder: (context, index) {
                 var contact = box.getAt(index) as Contact;
@@ -59,13 +56,11 @@ class _ContactListState extends State<ContactList> {
                         horizontal: 10,
                       ),
                       leading: CircleAvatar(
-                        child: Text(
-                          getInitials(contact.name),
-                        ),
+                        child: Text(getInitials(contact.name)),
                       ),
                       trailing: IconButton(
                         onPressed: () => _deleteDialog(context, contactKey),
-                        icon: Icon(Icons.delete),
+                        icon: Icon(Icons.delete_rounded),
                       ),
                       title: Text(contact.name),
                     ),
@@ -93,6 +88,11 @@ class _ContactListState extends State<ContactList> {
                 debtBox.delete(contactKey);
                 Navigator.of(context).pop();
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+                overlayColor: MaterialStateProperty.all(Colors.blue.shade600),
+              ),
               child: Text('Yes'),
             ),
           ],

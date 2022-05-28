@@ -54,6 +54,11 @@ void deleteDebt(
 
               Navigator.of(context).pop();
             },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.blue),
+              foregroundColor: MaterialStateProperty.all(Colors.white),
+              overlayColor: MaterialStateProperty.all(Colors.blue.shade600),
+            ),
             child: Text('Yes'),
           ),
         ],

@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 class DebtListScreen extends StatelessWidget {
   final String uuid;
   final DebtType type;
-  const DebtListScreen({Key? key, required this.uuid, required this.type})
-      : super(key: key);
+  const DebtListScreen({
+    Key? key,
+    required this.uuid,
+    required this.type,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Debt List'),
-      ),
+      appBar: AppBar(title: Text('Debt List')),
       body: DebtList(uuid: uuid, type: type),
     );
   }
