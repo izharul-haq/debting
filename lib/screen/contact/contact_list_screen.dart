@@ -2,14 +2,9 @@ import 'package:debting/screen/contact/add_contact_screen.dart';
 import 'package:debting/widget/screen/contact/contact_list.dart';
 import 'package:flutter/material.dart';
 
-class ContactListScreen extends StatefulWidget {
+class ContactListScreen extends StatelessWidget {
   const ContactListScreen({Key? key}) : super(key: key);
 
-  @override
-  State<ContactListScreen> createState() => _ContactListScreenState();
-}
-
-class _ContactListScreenState extends State<ContactListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +19,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
             ),
           );
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.person_add_alt_1_rounded),
       ),
     );
   }

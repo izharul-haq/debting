@@ -107,7 +107,7 @@ class _ContactInfoState extends State<ContactInfo> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            DebtListScreen(uuid: uuid, type: type, name: name),
+                            DebtListScreen(uuid: uuid, type: type),
                       ),
                     );
                   },

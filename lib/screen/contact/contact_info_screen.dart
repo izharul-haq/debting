@@ -2,33 +2,23 @@ import 'package:debting/screen/debt/add_debt_screen.dart';
 import 'package:debting/widget/screen/contact/contact_info.dart';
 import 'package:flutter/material.dart';
 
-class ContactInfoScreen extends StatefulWidget {
+class ContactInfoScreen extends StatelessWidget {
   final String uuid;
+  const ContactInfoScreen({Key? key, required this.uuid}) : super(key: key);
 
-  const ContactInfoScreen({
-    Key? key,
-    required this.uuid,
-  }) : super(key: key);
-
-  @override
-  State<ContactInfoScreen> createState() => _ContactInfoScreenState();
-}
-
-class _ContactInfoScreenState extends State<ContactInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Profile')),
-      body: ContactInfo(uuid: widget.uuid),
+      body: ContactInfo(uuid: uuid),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => AddDebtScreen(uuid: widget.uuid)),
+            MaterialPageRoute(builder: (context) => AddDebtScreen(uuid: uuid)),
           );
         },
-        child: Icon(Icons.edit),
+        child: Icon(Icons.edit_rounded),
       ),
     );
   }
