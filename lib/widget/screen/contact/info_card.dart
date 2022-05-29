@@ -10,7 +10,7 @@ class InfoCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -19,7 +19,11 @@ class InfoCard extends StatelessWidget {
               child: Text(getInitials(name), style: TextStyle(fontSize: 30)),
             ),
             SizedBox(height: 10),
-            Text(name, style: TextStyle(fontSize: 25)),
+            Text(
+              name,
+              style: TextStyle(fontSize: 25),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
