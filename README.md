@@ -6,13 +6,15 @@ Debting is a basic mobile application intended to track lending or borrowing mon
 
 Features in Debting:
 
-1. Create a contact (person who you owe to or owes you).
+1. Create, update, and delete a contact (person who you owe to or owes you).
 
 2. Create, update, and delete a debt.
 
 3. View list of debts.
 
 4. View aggregate of your debts, for each person or in total.
+
+5. Chat someone from contact via Whatsapp (currently only available to Indonesian phone number).
 
 ## Screenshots
 
