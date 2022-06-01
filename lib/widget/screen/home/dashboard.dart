@@ -70,4 +70,10 @@ class _DashboardState extends State<Dashboard> {
           );
         });
   }
+
+  @override
+  void dispose() {
+    debtBox.close();
+    super.dispose();
+  }
 }

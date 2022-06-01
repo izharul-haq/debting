@@ -8,6 +8,9 @@ class Contact {
   @HiveField(0)
   String name;
 
+  @HiveField(3)
+  String? phone;
+
   @HiveField(1)
   List<Debt> lend;
 
@@ -16,6 +19,7 @@ class Contact {
 
   Contact({
     required this.name,
+    this.phone,
     required this.lend,
     required this.borrow,
   });
@@ -36,5 +40,9 @@ class Contact {
     }
 
     return total;
+  }
+
+  String getInitials() {
+    return name.trim().split(RegExp(' +')).map((n) => n[0]).take(2).join();
   }
 }

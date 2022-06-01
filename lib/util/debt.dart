@@ -47,6 +47,7 @@ void deleteDebt(
                 uuid,
                 Contact(
                   name: contact.name,
+                  phone: contact.phone,
                   lend: contact.lend,
                   borrow: contact.borrow,
                 ),
