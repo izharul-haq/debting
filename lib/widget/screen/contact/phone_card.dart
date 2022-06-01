@@ -41,7 +41,7 @@ class PhoneCard extends StatelessWidget {
   }
 
   String _debtList(Contact contact) {
-    String res = '';
+    String res = 'Hi, ${contact.name}\n';
 
     int total = contact.sumDebt(countLend: true, countBorrow: true);
 
