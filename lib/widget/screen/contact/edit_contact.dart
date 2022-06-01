@@ -3,27 +3,40 @@ import 'package:debting/widget/screen/contact/input/name_input.dart';
 import 'package:debting/widget/screen/contact/input/phone_input.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:uuid/uuid.dart';
 
-class ContactForm extends StatefulWidget {
-  const ContactForm({Key? key}) : super(key: key);
+class EditContact extends StatefulWidget {
+  final String uuid;
+  // final Contact contact;
+  const EditContact({
+    Key? key,
+    required this.uuid,
+    // required this.contact,
+  }) : super(key: key);
 
   @override
-  State<ContactForm> createState() => _ContactFormState();
+  State<EditContact> createState() => _EditContactState();
 }
 
-class _ContactFormState extends State<ContactForm> {
+class _EditContactState extends State<EditContact> {
   final _formKey = GlobalKey<FormState>();
 
   final _name = TextEditingController();
   final _phone = TextEditingController();
 
   late Box debtBox;
+  late String uuid;
+  late Contact contact;
 
   @override
   void initState() {
     super.initState();
+
     debtBox = Hive.box('debts');
+    uuid = widget.uuid;
+    contact = debtBox.get(uuid);
+
+    _name.text = contact.name;
+    contact.phone != null ? _phone.text = contact.phone as String : null;
   }
 
   @override
@@ -31,7 +44,7 @@ class _ContactFormState extends State<ContactForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -43,18 +56,18 @@ class _ContactFormState extends State<ContactForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   debtBox.put(
-                    Uuid().v4(),
+                    uuid,
                     Contact(
                       name: _name.text,
-                      lend: [],
-                      borrow: [],
+                      lend: contact.lend,
+                      borrow: contact.borrow,
                       phone: _phone.text == '' ? null : '+62${_phone.text}',
                     ),
                   );
                   Navigator.pop(context);
                 }
               },
-              child: Text('Save', style: TextStyle(fontSize: 16)),
+              child: Text('Edit', style: TextStyle(fontSize: 16)),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -65,11 +78,5 @@ class _ContactFormState extends State<ContactForm> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _name.dispose();
-    super.dispose();
   }
 }

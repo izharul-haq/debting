@@ -7,6 +7,7 @@ import 'package:debting/util/debt.dart';
 import 'package:debting/util/text.dart';
 import 'package:debting/widget/common/sum_debt.dart';
 import 'package:debting/widget/screen/contact/info_card.dart';
+import 'package:debting/widget/screen/contact/phone_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -52,7 +53,8 @@ class _ContactInfoState extends State<ContactInfo> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      InfoCard(name: contact.name),
+                      InfoCard(contact: contact),
+                      PhoneCard(contact: contact),
                       SumDebt(
                         name: contact.name,
                         total: contact.sumDebt(

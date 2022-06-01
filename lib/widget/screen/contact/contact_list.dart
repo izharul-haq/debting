@@ -1,6 +1,5 @@
 import 'package:debting/model/contact.dart';
 import 'package:debting/screen/contact/contact_info_screen.dart';
-import 'package:debting/util/text.dart';
 import 'package:debting/widget/common/empty_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -56,7 +55,7 @@ class _ContactListState extends State<ContactList> {
                         horizontal: 10,
                       ),
                       leading: CircleAvatar(
-                        child: Text(getInitials(contact.name)),
+                        child: Text(contact.getInitials()),
                       ),
                       trailing: IconButton(
                         onPressed: () => _deleteDialog(context, contactKey),

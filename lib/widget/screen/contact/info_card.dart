@@ -1,9 +1,9 @@
-import 'package:debting/util/text.dart';
+import 'package:debting/model/contact.dart';
 import 'package:flutter/material.dart';
 
 class InfoCard extends StatelessWidget {
-  final String name;
-  const InfoCard({Key? key, required this.name}) : super(key: key);
+  final Contact contact;
+  const InfoCard({Key? key, required this.contact}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +16,14 @@ class InfoCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 50,
-              child: Text(getInitials(name), style: TextStyle(fontSize: 30)),
+              child: Text(
+                contact.getInitials(),
+                style: TextStyle(fontSize: 30),
+              ),
             ),
             SizedBox(height: 10),
             Text(
-              name,
+              contact.name,
               style: TextStyle(fontSize: 25),
               textAlign: TextAlign.center,
             ),
