@@ -79,6 +79,7 @@ class _DebtFormState extends State<DebtForm> {
                     uuid,
                     Contact(
                       name: contact.name,
+                      phone: contact.phone,
                       lend: contact.lend,
                       borrow: contact.borrow,
                     ),
