@@ -6,12 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class EditContact extends StatefulWidget {
   final String uuid;
-  // final Contact contact;
-  const EditContact({
-    Key? key,
-    required this.uuid,
-    // required this.contact,
-  }) : super(key: key);
+  const EditContact({Key? key, required this.uuid}) : super(key: key);
 
   @override
   State<EditContact> createState() => _EditContactState();
@@ -36,7 +31,7 @@ class _EditContactState extends State<EditContact> {
     contact = debtBox.get(uuid);
 
     _name.text = contact.name;
-    contact.phone != null ? _phone.text = contact.phone as String : null;
+    contact.phone != null ? _phone.text = contact.phone!.substring(3) : null;
   }
 
   @override
