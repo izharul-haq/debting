@@ -23,7 +23,7 @@ class PhoneInput extends StatelessWidget {
       ),
       validator: (val) {
         if (val!.startsWith('+62') || val.startsWith('0')) {
-          return 'Please remove international code';
+          return 'Please remove country code and trunk prefix';
         }
 
         return null;

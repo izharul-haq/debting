@@ -48,10 +48,7 @@ class _ContactInfoState extends State<ContactInfo> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: ListView(
                     children: [
                       InfoCard(contact: contact),
                       PhoneCard(contact: contact),
