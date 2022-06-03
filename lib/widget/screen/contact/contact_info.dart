@@ -73,6 +73,7 @@ class _ContactInfoState extends State<ContactInfo> {
                         type: DebtType.borrow,
                         name: contact.name,
                       ),
+                      _clearDebtButton(box, contact),
                     ],
                   ),
                 ),
@@ -118,7 +119,7 @@ class _ContactInfoState extends State<ContactInfo> {
             ),
             Divider(thickness: 1),
             debt == null
-                ? Center(child: Text('There\'re no history'))
+                ? Center(child: Text('There\'s no debt recorded'))
                 : InkWell(
                     onTap: () {
                       Navigator.push(
@@ -161,6 +162,62 @@ class _ContactInfoState extends State<ContactInfo> {
                   ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _clearDebtButton(Box box, Contact contact) {
+    return TextButton(
+      onPressed: () async {
+        await showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Clear Debt', textAlign: TextAlign.center),
+                content: Text(
+                  'This will clear all debt with ${contact.name}. Are you sure?',
+                  textAlign: TextAlign.center,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('No'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      contact.lend.clear();
+                      contact.borrow.clear();
+
+                      box.put(
+                        uuid,
+                        Contact(
+                          name: contact.name,
+                          phone: contact.phone,
+                          lend: contact.lend,
+                          borrow: contact.borrow,
+                        ),
+                      );
+
+                      Navigator.of(context).pop();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      overlayColor: MaterialStateProperty.all(
+                        Colors.red.shade600,
+                      ),
+                    ),
+                    child: Text('Yes'),
+                  ),
+                ],
+              );
+            });
+      },
+      child: Text('Clear Debt'),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.red),
+        foregroundColor: MaterialStateProperty.all(Colors.white),
+        overlayColor: MaterialStateProperty.all(Colors.red.shade600),
       ),
     );
   }

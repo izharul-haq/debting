@@ -75,8 +75,11 @@ class _ContactListState extends State<ContactList> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Delete Contact'),
-          content: Text('Are you sure to remove this contact?'),
+          title: Text('Delete Contact', textAlign: TextAlign.center),
+          content: Text(
+            'This will remove the selected contact. Are you sure?',
+            textAlign: TextAlign.center,
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
