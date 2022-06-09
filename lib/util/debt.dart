@@ -28,8 +28,11 @@ void deleteDebt(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('Delete Debt'),
-        content: Text('Are you sure to remove this debt?'),
+        title: Text('Delete Debt', textAlign: TextAlign.center),
+        content: Text(
+          'This will remove the selected debt. Are you sure?',
+          textAlign: TextAlign.center,
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -56,9 +59,9 @@ void deleteDebt(
               Navigator.of(context).pop();
             },
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
+              backgroundColor: MaterialStateProperty.all(Colors.red),
               foregroundColor: MaterialStateProperty.all(Colors.white),
-              overlayColor: MaterialStateProperty.all(Colors.blue.shade600),
+              overlayColor: MaterialStateProperty.all(Colors.red.shade600),
             ),
             child: Text('Yes'),
           ),

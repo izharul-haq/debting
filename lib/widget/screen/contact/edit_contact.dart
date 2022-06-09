@@ -62,7 +62,7 @@ class _EditContactState extends State<EditContact> {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Edit', style: TextStyle(fontSize: 16)),
+              child: Text('Edit Contact', style: TextStyle(fontSize: 16)),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
