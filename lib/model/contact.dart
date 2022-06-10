@@ -24,25 +24,18 @@ class Contact {
     required this.borrow,
   });
 
-  int sumDebt({bool countLend = false, bool countBorrow = false}) {
+  // Get initials from this contact's name
+  String get initials =>
+      name.trim().split(RegExp(' +')).map((n) => n[0]).take(2).join();
+
+  // Calculate sum of this contact's debt
+  // based on debt (lend or borrow) list included
+  int sum({bool includeLend = false, bool includeBorrow = false}) {
     int total = 0;
 
-    if (countLend) {
-      for (var e in lend) {
-        total += e.amount;
-      }
-    }
-
-    if (countBorrow) {
-      for (var e in borrow) {
-        total -= e.amount;
-      }
-    }
+    if (includeLend) total += lend.fold(0, (prev, e) => prev + e.amount);
+    if (includeBorrow) total -= borrow.fold(0, (prev, e) => prev + e.amount);
 
     return total;
-  }
-
-  String getInitials() {
-    return name.trim().split(RegExp(' +')).map((n) => n[0]).take(2).join();
   }
 }

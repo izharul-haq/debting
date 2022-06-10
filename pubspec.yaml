@@ -39,6 +39,8 @@ dependencies:
   intl: ^0.17.0
   font_awesome_flutter: ^10.1.0
   url_launcher: ^6.1.2
+  get: ^4.6.5
+  sizer: ^2.0.15
 
 dev_dependencies:
   flutter_test:

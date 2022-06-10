@@ -19,11 +19,13 @@ class Debt {
     required this.desc,
   });
 
-  Debt deepCopy() {
-    return Debt(amount: amount, date: date, desc: desc);
-  }
+  // Return a deep copy of this debt
+  Debt get copy => Debt(amount: amount, desc: desc, date: date);
 
+  // Check if this debt and the other debt are equal
   bool equals(Debt other) {
     return other.amount == amount && other.date == date && other.desc == desc;
   }
 }
+
+enum DebtType { lend, borrow }

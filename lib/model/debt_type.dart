@@ -1,1 +1,0 @@
-enum DebtType { lend, borrow }
