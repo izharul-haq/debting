@@ -5,6 +5,7 @@ import 'package:debting/provider/theme_provider.dart';
 import 'package:debting/routes/app_routes.dart';
 import 'package:debting/routes/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sizer/sizer.dart';
@@ -17,6 +18,17 @@ void main() async {
 
   await Hive.openBox<Contact>('debts');
   await Hive.openBox<dynamic>('setting');
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
 
   runApp(DebtingApp());
 }
