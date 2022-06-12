@@ -1,7 +1,7 @@
-import 'package:debting/controller/theme_controller.dart';
-import 'package:debting/model/contact.dart';
-import 'package:debting/model/debt.dart';
-import 'package:debting/provider/theme_provider.dart';
+import 'package:debting/controllers/theme_controller.dart';
+import 'package:debting/models/contact.dart';
+import 'package:debting/models/debt.dart';
+import 'package:debting/providers/theme_provider.dart';
 import 'package:debting/routes/app_routes.dart';
 import 'package:debting/routes/route_names.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ void main() async {
   Hive.registerAdapter(DebtAdapter());
 
   await Hive.openBox<Contact>('debts');
-  await Hive.openBox<dynamic>('setting');
+  await Hive.openBox<dynamic>('settings');
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -46,8 +46,8 @@ class DebtingApp extends StatelessWidget {
         themeMode: ThemeController().theme,
         theme: ThemeProvider.light,
         darkTheme: ThemeProvider.dark,
+        getPages: AppRoutes.routes,
         initialRoute: RouteNames.home,
-        getPages: AppRoutes.list,
       ),
     );
   }

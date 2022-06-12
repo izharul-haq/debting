@@ -1,44 +1,47 @@
-import 'package:debting/binding/contact_binding.dart';
-import 'package:debting/binding/theme_binding.dart';
+import 'package:debting/bindings/contact_binding.dart';
+import 'package:debting/bindings/db_binding.dart';
+import 'package:debting/bindings/theme_binding.dart';
 import 'package:debting/routes/route_names.dart';
-import 'package:debting/screen/contact/contact_add_screen.dart';
-import 'package:debting/screen/contact/contact_edit_screen.dart';
-import 'package:debting/screen/contact/contact_info_screen.dart';
-import 'package:debting/screen/contact/contact_list_screen.dart';
-import 'package:debting/screen/home_screen.dart';
-import 'package:debting/screen/setting_screen.dart';
-import 'package:get/route_manager.dart';
+import 'package:debting/views/contact/contact_add_view.dart';
+import 'package:debting/views/contact/contact_edit_view.dart';
+import 'package:debting/views/contact/contact_info_view.dart';
+import 'package:debting/views/contact/contact_list_view.dart';
+import 'package:debting/views/home_view.dart';
+import 'package:debting/views/setting_view.dart';
+import 'package:get/get.dart';
 
-class AppRoutes {
-  static final list = [
-    GetPage(name: RouteNames.home, page: () => HomeScreen()),
+abstract class AppRoutes {
+  static final List<GetPage> routes = [
+    // Home route
+    GetPage(name: RouteNames.home, page: () => HomeView()),
+
+    // Setting route
     GetPage(
       name: RouteNames.setting,
-      page: () => SettingScreen(),
-      bindings: [
-        ThemeBinding(),
-        ContactBinding(),
-      ],
+      page: () => SettingView(),
+      bindings: [ThemeBinding(), DBBinding()],
     ),
+
+    // Contact (group) routes
     GetPage(
       name: RouteNames.contactList,
-      page: () => ContactListScreen(),
-      binding: ContactBinding(),
+      page: () => ContactListView(),
+      bindings: [DBBinding(), ContactBinding()],
     ),
     GetPage(
       name: RouteNames.contactAdd,
-      page: () => ContactAddScreen(),
-      binding: ContactBinding(),
+      page: () => ContactAddView(),
+      binding: DBBinding(),
     ),
     GetPage(
       name: RouteNames.contactInfo,
-      page: () => ContactInfoScreen(),
-      binding: ContactBinding(),
+      page: () => ContactInfoView(),
+      bindings: [DBBinding(), ContactBinding()],
     ),
     GetPage(
       name: RouteNames.contactEdit,
-      page: () => ContactEditScreen(),
-      binding: ContactBinding(),
+      page: () => ContactEditView(),
+      bindings: [DBBinding(), ContactBinding()],
     ),
   ];
 }
