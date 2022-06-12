@@ -40,7 +40,7 @@ class Contact {
     int total = 0;
 
     if (includeLend) total += lend.fold(0, (prev, e) => prev + e.amount);
-    if (includeBorrow) total -= lend.fold(0, (prev, e) => prev + e.amount);
+    if (includeBorrow) total -= borrow.fold(0, (prev, e) => prev + e.amount);
 
     return total;
   }

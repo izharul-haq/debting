@@ -6,6 +6,8 @@ import 'package:debting/views/contact/contact_add_view.dart';
 import 'package:debting/views/contact/contact_edit_view.dart';
 import 'package:debting/views/contact/contact_info_view.dart';
 import 'package:debting/views/contact/contact_list_view.dart';
+import 'package:debting/views/debt/debt_add_view.dart';
+import 'package:debting/views/debt/debt_edit_view.dart';
 import 'package:debting/views/home_view.dart';
 import 'package:debting/views/setting_view.dart';
 import 'package:get/get.dart';
@@ -41,6 +43,18 @@ abstract class AppRoutes {
     GetPage(
       name: RouteNames.contactEdit,
       page: () => ContactEditView(),
+      bindings: [DBBinding(), ContactBinding()],
+    ),
+
+    // Debt (group) routes
+    GetPage(
+      name: RouteNames.debtAdd,
+      page: () => DebtAddView(),
+      bindings: [DBBinding(), ContactBinding()],
+    ),
+    GetPage(
+      name: RouteNames.debtEdit,
+      page: () => DebtEditView(),
       bindings: [DBBinding(), ContactBinding()],
     ),
   ];

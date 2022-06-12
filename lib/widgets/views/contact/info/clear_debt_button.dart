@@ -1,6 +1,5 @@
 import 'package:debting/controllers/contact_controller.dart';
 import 'package:debting/controllers/db_controller.dart';
-import 'package:debting/models/contact.dart';
 import 'package:debting/models/debt.dart';
 import 'package:debting/widgets/common/buttons/danger_button.dart';
 import 'package:debting/widgets/common/warning_dialog.dart';
@@ -24,12 +23,15 @@ class ClearDebtButton extends StatelessWidget {
         WarningDialog(
           message: _message,
           onAccept: () {
-            Contact updatedContact = _contactController.updateContact(
+            _contactController.updateContact(
               lend: List<Debt>.empty(growable: true),
               borrow: List<Debt>.empty(growable: true),
             );
 
-            _dbController.editContact(_contactController.key, updatedContact);
+            _dbController.editContact(
+              _contactController.key,
+              _contactController.contact,
+            );
           },
         ),
       ),

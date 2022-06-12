@@ -1,7 +1,6 @@
 import 'package:debting/constants/screen_padding.dart';
 import 'package:debting/controllers/contact_controller.dart';
 import 'package:debting/controllers/db_controller.dart';
-import 'package:debting/models/contact.dart';
 import 'package:debting/widgets/common/spacing.dart';
 import 'package:debting/widgets/common/submit_input.dart';
 import 'package:debting/widgets/views/contact/common/name_input.dart';
@@ -49,14 +48,14 @@ class _ContactEditFormState extends State<ContactEditForm> {
             SubmitInput(
               formKey: _key,
               onSubmit: () {
-                Contact updatedContact = _contactController.updateContact(
+                _contactController.updateContact(
                   name: _name.text,
                   phone: _phone.text,
                 );
 
                 _dbController.editContact(
                   _contactController.key,
-                  updatedContact,
+                  _contactController.contact,
                 );
               },
               text: 'Edit',

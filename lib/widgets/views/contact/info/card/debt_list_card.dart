@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:debting/controllers/contact_controller.dart';
 import 'package:debting/models/debt.dart';
 import 'package:debting/widgets/common/empty_list.dart';
 import 'package:debting/widgets/views/contact/info/debt_list.dart';
+import 'package:debting/widgets/views/contact/info/debt_list_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -31,7 +34,11 @@ class DebtListCard extends StatelessWidget {
               _title(),
               Divider(thickness: 1),
               debts.isNotEmpty
-                  ? DebtList(type: type, debts: debts, length: 5)
+                  ? DebtList(
+                      type: type,
+                      debts: debts,
+                      length: min(debts.length, 5),
+                    )
                   : Padding(
                       padding: EdgeInsets.symmetric(vertical: 0.5.h),
                       child: EmptyList(message: _message),
@@ -53,7 +60,7 @@ class DebtListCard extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 4.w),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () => Get.bottomSheet(DebtListBottomSheet(type: type)),
           icon: Icon(Icons.more_horiz_rounded),
         ),
       ],
