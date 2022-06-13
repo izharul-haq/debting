@@ -18,9 +18,9 @@ class ContactAdapter extends TypeAdapter<Contact> {
     };
     return Contact(
       name: fields[0] as String,
-      phone: fields[1] as String?,
-      lend: (fields[2] as List).cast<Debt>(),
-      borrow: (fields[3] as List).cast<Debt>(),
+      phone: fields[3] as String?,
+      lend: (fields[1] as List).cast<Debt>(),
+      borrow: (fields[2] as List).cast<Debt>(),
     );
   }
 
@@ -30,11 +30,11 @@ class ContactAdapter extends TypeAdapter<Contact> {
       ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
-      ..writeByte(1)
-      ..write(obj.phone)
-      ..writeByte(2)
-      ..write(obj.lend)
       ..writeByte(3)
+      ..write(obj.phone)
+      ..writeByte(1)
+      ..write(obj.lend)
+      ..writeByte(2)
       ..write(obj.borrow);
   }
 

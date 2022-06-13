@@ -8,13 +8,13 @@ class Contact {
   @HiveField(0)
   String name;
 
-  @HiveField(1)
+  @HiveField(3)
   String? phone;
 
-  @HiveField(2)
+  @HiveField(1)
   List<Debt> lend;
 
-  @HiveField(3)
+  @HiveField(2)
   List<Debt> borrow;
 
   Contact({

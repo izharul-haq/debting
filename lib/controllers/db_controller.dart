@@ -25,7 +25,7 @@ class DBController extends GetxController {
       Uuid().v4(),
       Contact(
         name: name,
-        phone: phone != '' ? phone : null,
+        phone: phone != '+62' ? phone : null,
         lend: List<Debt>.empty(growable: true),
         borrow: List<Debt>.empty(growable: true),
       ),

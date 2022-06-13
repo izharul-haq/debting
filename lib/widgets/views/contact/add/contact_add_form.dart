@@ -39,7 +39,7 @@ class _ContactAddFormState extends State<ContactAddForm> {
               formKey: _key,
               onSubmit: () => _controller.addContact(
                 name: _name.text,
-                phone: _phone.text,
+                phone: '+62${_phone.text}',
               ),
               text: 'Save',
             ),

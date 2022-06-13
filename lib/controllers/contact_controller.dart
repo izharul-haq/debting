@@ -20,7 +20,7 @@ class ContactController extends GetxController {
     List<Debt>? borrow,
   }) {
     if (name != null) contact.name = name;
-    if (phone != null) contact.phone = phone != '' ? phone : null;
+    if (phone != null) contact.phone = phone != '+62' ? phone : null;
     if (lend != null) contact.lend = lend;
     if (borrow != null) contact.borrow = borrow;
 

@@ -32,7 +32,7 @@ class DebtTotalCard extends StatelessWidget {
                 ),
                 Spacing(),
                 Text(
-                  CurrencyUtils.format(total),
+                  CurrencyUtils.format(total.abs()),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 6.w,

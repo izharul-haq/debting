@@ -12,14 +12,12 @@ class DebtList extends StatelessWidget {
   final DebtType type;
   final List<Debt> debts;
   final int? length;
-  final List<Widget>? extensions;
 
   DebtList({
     Key? key,
     required this.type,
     required this.debts,
     this.length,
-    this.extensions,
   }) : super(key: key);
 
   final _contactController = Get.find<ContactController>();

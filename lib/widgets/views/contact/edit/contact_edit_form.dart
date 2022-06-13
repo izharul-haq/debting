@@ -29,7 +29,7 @@ class _ContactEditFormState extends State<ContactEditForm> {
     super.initState();
 
     _name.text = _contactController.contact.name;
-    _phone.text = _contactController.contact.phone ?? '';
+    _phone.text = _contactController.contact.phone?.substring(3) ?? '';
   }
 
   @override
@@ -50,7 +50,7 @@ class _ContactEditFormState extends State<ContactEditForm> {
               onSubmit: () {
                 _contactController.updateContact(
                   name: _name.text,
-                  phone: _phone.text,
+                  phone: '+62${_phone.text}',
                 );
 
                 _dbController.editContact(

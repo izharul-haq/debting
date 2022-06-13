@@ -23,7 +23,7 @@ class PhoneCard extends StatelessWidget {
           return ListTile(
             leading: Icon(Icons.phone_rounded),
             title: Text(
-              isAvailable ? '+62${_controller.contact.phone}' : 'Not Available',
+              isAvailable ? _controller.contact.phone! : 'Not Available',
             ),
             trailing: IconButton(
               onPressed:
@@ -38,9 +38,9 @@ class PhoneCard extends StatelessWidget {
 
   void chatWhatsapp(Contact contact) async {
     // Generate message to send
-    String message = 'Hi ${contact.name}\n';
+    String message = 'Hi, ${contact.name}\n';
 
-    message += 'I lend you:\n';
+    message += '\nI lend you:\n';
     for (Debt debt in contact.lend) {
       message +=
           '- ${DateFormat('dd/MM/yy').format(debt.date)}; ${CurrencyUtils.format(debt.amount)}; ${debt.desc}\n';
@@ -59,7 +59,7 @@ class PhoneCard extends StatelessWidget {
 
     // Send message
     Uri url = Uri.parse(
-        'https://api.whatsapp.com/send?phone=62${contact.phone!}&text=$message');
+        'https://api.whatsapp.com/send?phone=${contact.phone!.substring(1)}&text=$message');
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';
