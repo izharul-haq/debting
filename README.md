@@ -16,13 +16,11 @@ Features in Debting:
 
 5. Send list of debts to someone from contact via Whatsapp (currently only available to Indonesian phone number).
 
-Additional features in version 2.0.0:
+6. Clear all debts you/someone owe(s) at once.
 
-1. Clear all debts you/someone owe(s) at once.
+7. Clear all data.
 
-2. Clear all data.
-
-3. Input amount via calculator.
+8. Input amount via calculator.
 
 ## Screenshots
 
