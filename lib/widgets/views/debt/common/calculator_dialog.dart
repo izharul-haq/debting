@@ -1,49 +1,21 @@
+import 'package:debting/controllers/calculator_controller.dart';
 import 'package:debting/widgets/common/buttons/transparent_button.dart';
 import 'package:debting/widgets/common/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:math_expressions/math_expressions.dart';
 import 'package:sizer/sizer.dart';
 
-class CalculatorDialog extends StatefulWidget {
-  const CalculatorDialog({Key? key}) : super(key: key);
+class CalculatorDialog extends StatelessWidget {
+  final int? initial;
 
-  @override
-  State<CalculatorDialog> createState() => _CalculatorDialogState();
-}
+  CalculatorDialog({Key? key, this.initial}) : super(key: key);
 
-class _CalculatorDialogState extends State<CalculatorDialog> {
-  final Map<String, String> _operators = {
-    '÷': '/',
-    '×': '*',
-    '-': '-',
-    '+': '+',
-  };
-  final List<String> _buttons = [
-    '7',
-    '8',
-    '9',
-    '÷',
-    '4',
-    '5',
-    '6',
-    '×',
-    '1',
-    '2',
-    '3',
-    '-',
-    '0',
-    '000',
-    '⌫',
-    '+',
-  ];
-  final Parser _parser = Parser();
-
-  String expression = '0';
-  int result = 0;
+  final _calculatorController = Get.find<CalculatorController>();
 
   @override
   Widget build(BuildContext context) {
+    _calculatorController.setInitial(initial ?? 0);
+
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       content: SizedBox(
@@ -61,13 +33,13 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
       ),
       actions: [
         TransparentButton(
-          onPressed: () => Get.back(result: result),
+          onPressed: () => Get.back(),
           child: Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
-            _onConfirm();
-            Get.back(result: result);
+            _calculatorController.parse();
+            Get.back(result: _calculatorController.result);
           },
           child: Text('Confirm'),
         ),
@@ -87,15 +59,17 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 3.h),
           ),
           SizedBox(width: 1.5.w),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Text(
-                expression,
-                style: TextStyle(fontSize: 3.h, fontWeight: FontWeight.bold),
+          GetBuilder<CalculatorController>(builder: (controller) {
+            return Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(
+                  controller.expression,
+                  style: TextStyle(fontSize: 3.h, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );
@@ -107,10 +81,10 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
       crossAxisCount: 4,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      children: _buttons
+      children: _calculatorController.buttons
           .map(
             (button) => IconButton(
-              onPressed: () => _onTap(button),
+              onPressed: () => _calculatorController.updateExpression(button),
               icon: Text(
                 button,
                 style: TextStyle(fontSize: 3.h, fontWeight: FontWeight.w500),
@@ -119,39 +93,5 @@ class _CalculatorDialogState extends State<CalculatorDialog> {
           )
           .toList(),
     );
-  }
-
-  void _onTap(String text) {
-    String res = expression;
-
-    if (text == '⌫') {
-      res = res.substring(0, expression.length - 1);
-      if (res == '') res = '0';
-    } else if (_operators.keys.contains(text)) {
-      if (res != '0') res += text;
-    } else {
-      if (res == '0' && text != '000') {
-        res = text;
-      } else {
-        res += text;
-      }
-    }
-
-    setState(() => expression = res);
-  }
-
-  void _onConfirm() {
-    Expression exp = _parser.parse(
-      _operators.entries.fold(
-        expression,
-        (prev, e) => prev.replaceAll(e.key, e.value),
-      ),
-    );
-
-    double res = double.parse(
-      exp.evaluate(EvaluationType.REAL, ContextModel()).toString(),
-    );
-
-    setState(() => result = res.toInt());
   }
 }
