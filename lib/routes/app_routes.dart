@@ -1,3 +1,4 @@
+import 'package:debting/bindings/calculator_binding.dart';
 import 'package:debting/bindings/contact_binding.dart';
 import 'package:debting/bindings/db_binding.dart';
 import 'package:debting/bindings/theme_binding.dart';
@@ -55,12 +56,12 @@ abstract class AppRoutes {
     GetPage(
       name: RouteNames.debtAdd,
       page: () => DebtAddView(),
-      bindings: [DBBinding(), ContactBinding()],
+      bindings: [DBBinding(), ContactBinding(), CalculatorBinding()],
     ),
     GetPage(
       name: RouteNames.debtEdit,
       page: () => DebtEditView(),
-      bindings: [DBBinding(), ContactBinding()],
+      bindings: [DBBinding(), ContactBinding(), CalculatorBinding()],
     ),
     GetPage(
       name: RouteNames.debtList,

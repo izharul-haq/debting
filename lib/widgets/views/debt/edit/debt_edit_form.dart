@@ -36,11 +36,13 @@ class _DebtEditFormState extends State<DebtEditForm> {
   final _desc = TextEditingController();
   final _date = TextEditingController();
 
+  late Debt _debt;
+
   @override
   void initState() {
     super.initState();
 
-    Debt _debt = widget.type == DebtType.lend
+    _debt = widget.type == DebtType.lend
         ? _contactController.contact.lend[widget.index]
         : _contactController.contact.borrow[widget.index];
 
@@ -58,7 +60,7 @@ class _DebtEditFormState extends State<DebtEditForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AmountInput(controller: _amount),
+            AmountInput(controller: _amount, initial: _debt.amount),
             Spacing(),
             DescInput(controller: _desc),
             Spacing(),
